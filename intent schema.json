@@ -19,12 +19,15 @@
                     "name": "gameIntent",
                     "slots": [
                         {
-                            "name": "actionn",
+                            "name": "action",
                             "type": "actiongame"
                         }
                     ],
                     "samples": [
-                        "{actionn}"
+                        "i am {action}",
+                        "i draw {action}",
+                        "i choose {action}",
+                        "{action}"
                     ]
                 },
                 {
@@ -38,7 +41,10 @@
                     "values": [
                         {
                             "name": {
-                                "value": "rock"
+                                "value": "rock",
+                                "synonyms": [
+                                    "stone"
+                                ]
                             }
                         },
                         {
