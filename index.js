@@ -13,7 +13,7 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = 'Welcome to Rock Paper Scissors,whats your draw';
+        const speechText = 'Welcome to Rock Paper Scissors,whats do you draw';
         return handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)
@@ -28,37 +28,37 @@ const gameIntentHandler = {
     handle(handlerInput) {
         let speechText = '';
         let reprompt ='what is your next move!';
-        const actionn=handlerInput.requestEnvelope.request.intent.slots.actionn.value;
+        const action=handlerInput.requestEnvelope.request.intent.slots.action.value;
         const alexaAction=ACTIONS[Math.floor(Math.random()*ACTIONS.length-1)]
-        const combo = actionn+alexaAction
+        const combo = action+alexaAction
         switch(combo)
         {
             case 'rockrock':
-                speechText+="you played rock and i drew rock,it is a tie!";
+                speechText+="you played rock and i played rock, it is a tie!";
                 break;
             case 'rockpaper':
-                speechText+="you played rock and i drew paper,I win!";
+                speechText+="you played rock and i played paper, I win!";
                 break;
             case 'rockscissors':
-                speechText+="you played rock and i drew scissors,you win!";
+                speechText+="you played rock and i played scissors, you win! congratulations";
                 break;
                 case 'paperrock':
-                    speechText+="you played paper and i drew rock,you win!";
+                    speechText+="you played paper and i played rock, you win! congratulations ";
                 break;
                 case 'paperpaper':
-                    speechText+="you played paper and i drew paper,it is a tie!";
+                    speechText+="you played paper and i played paper, it is a tie!";
                 break;
                 case 'paperscissors':
-                    speechText+="you played paper and i drew scissors,I win!";
+                    speechText+="you played paper and i played scissors, I win!";
                 break;
                 case 'scissorsrock':
-                    speechText+="you played scissors and i drew rock,I win!";
+                    speechText+="you played scissors and i played rock, I win!";
                 break;
                 case 'sissorspaper':
-                    speechText+="you played scissors and i drew paper,you win!";
+                    speechText+="you played scissors and i played paper, you win! congratulations";
                 break;
                 case 'scissorsscissors':
-                    speechText+="you played scissors and i drew scissors,it is a tie!";
+                    speechText+="you played scissors and i played scissors, it is a tie!";
                 break;
                 default:
                  break;
@@ -75,7 +75,7 @@ const HelpIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speechText = 'You can say hello to me! How can I help?';
+        const speechText = 'You need to choose any of the one from rock, paper or scissors';
 
         return handlerInput.responseBuilder
             .speak(speechText)
