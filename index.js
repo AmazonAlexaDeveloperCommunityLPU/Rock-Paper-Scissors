@@ -4,101 +4,107 @@
 const Alexa = require('ask-sdk-core');
 
 const ACTIONS=[
-         'paper',
-         'rock',
-         'scissors'
-    ]
+            'paper',
+            'rock',
+            'scissor'
+        ];
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = 'Welcome to Rock Paper Scissors,whats do you draw';
+        const speakOutput = 'Welcome to rock paper scissor. What do you choose?';
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+            .speak(speakOutput)
+            .reprompt(speakOutput)
             .getResponse();
     }
 };
-const gameIntentHandler = {
+const GameIntentHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'gameIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GameIntent';
     },
     handle(handlerInput) {
-        let speechText = '';
-        let reprompt ='what is your next move!';
-        const action=handlerInput.requestEnvelope.request.intent.slots.action.value;
-        const alexaAction=ACTIONS[Math.floor(Math.random()*ACTIONS.length-1)]
-        const combo = action+alexaAction
+        
+        const userAction = handlerInput.requestEnvelope.request.intent.slots.action.value;
+        
+        let speakOutput = '';
+        let repromptOutput =' What is your next move?';
+        
+        const alexaAction=ACTIONS[Math.floor(Math.random()*ACTIONS.length)];
+
+        const combo = userAction+alexaAction;
+
         switch(combo)
         {
             case 'rockrock':
-                speechText+="you played rock and i played rock, it is a tie!";
+                speakOutput+="you played rock and i played rock, it is a tie! ";
                 break;
             case 'rockpaper':
-                speechText+="you played rock and i played paper, I win!";
+                speakOutput+="you played rock and i played paper, I win! ";
                 break;
-            case 'rockscissors':
-                speechText+="you played rock and i played scissors, you win! congratulations";
+            case 'rockscissor':
+                speakOutput+="you played rock and i played scissor, you win! congratulations ";
                 break;
-                case 'paperrock':
-                    speechText+="you played paper and i played rock, you win! congratulations ";
+            case 'paperrock':
+                speakOutput+="you played paper and i played rock, you win! congratulations ";
                 break;
-                case 'paperpaper':
-                    speechText+="you played paper and i played paper, it is a tie!";
+            case 'paperpaper':
+                speakOutput+="you played paper and i played paper, it is a tie! ";
                 break;
-                case 'paperscissors':
-                    speechText+="you played paper and i played scissors, I win!";
+            case 'paperscissor':
+                speakOutput+="you played paper and i played scissor, I win! ";
                 break;
-                case 'scissorsrock':
-                    speechText+="you played scissors and i played rock, I win!";
+            case 'scissorrock':
+                speakOutput+="you played scissor and i played rock, I win! ";
                 break;
-                case 'sissorspaper':
-                    speechText+="you played scissors and i played paper, you win! congratulations";
+            case 'scissorpaper':
+                speakOutput+="you played scissor and i played paper, you win! congratulations ";
                 break;
-                case 'scissorsscissors':
-                    speechText+="you played scissors and i played scissors, it is a tie!";
+            case 'scissorscissor':
+                speakOutput+="you played scissor and i played scissor, it is a tie! ";
                 break;
-                default:
+            default:
                  break;
         }
         return handlerInput.responseBuilder
-            .speak(speechText + reprompt)
-            .reprompt(reprompt)
+            .speak(speakOutput + repromptOutput)
+            .reprompt(repromptOutput)
             .getResponse();
     }
 };
 const HelpIntentHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speechText = 'You need to choose any of the one from rock, paper or scissors';
+        const speakOutput = 'This is a skill to play rock paper scissor. What do you choose?';
 
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+            .speak(speakOutput)
+            .reprompt(speakOutput)
             .getResponse();
     }
 };
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-                || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent'
+                || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Goodbye!';
+        const speakOutput = 'Goodbye!';
         return handlerInput.responseBuilder
-            .speak(speechText)
+            .speak(speakOutput)
             .getResponse();
     }
 };
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
     },
     handle(handlerInput) {
         // Any cleanup logic goes here.
@@ -112,14 +118,14 @@ const SessionEndedRequestHandler = {
 // handler chain below.
 const IntentReflectorHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest';
     },
     handle(handlerInput) {
-        const intentName = handlerInput.requestEnvelope.request.intent.name;
-        const speechText = `You just triggered ${intentName}`;
+        const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
+        const speakOutput = `You just triggered ${intentName}`;
 
         return handlerInput.responseBuilder
-            .speak(speechText)
+            .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
@@ -133,27 +139,29 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        console.log(`~~~~ Error handled: ${error.message}`);
-        const speechText = `Sorry, I couldn't understand what you said. Please try again.`;
+        console.log(`~~~~ Error handled: ${error.stack}`);
+        const speakOutput = `Sorry, I had trouble doing what you asked. Please try again.`;
 
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+            .speak(speakOutput)
+            .reprompt(speakOutput)
             .getResponse();
     }
 };
 
-// This handler acts as the entry point for your skill, routing all request and response
+// The SkillBuilder acts as the entry point for your skill, routing all request and response
 // payloads to the handlers above. Make sure any new handlers or interceptors you've
 // defined are included below. The order matters - they're processed top to bottom.
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        gameIntentHandler,
+        GameIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
-        IntentReflectorHandler) // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
+        IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
+    )
     .addErrorHandlers(
-        ErrorHandler)
+        ErrorHandler,
+    )
     .lambda();
