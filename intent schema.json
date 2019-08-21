@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "rock paper scissors",
+            "invocationName": "rock paper scissor",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -16,51 +16,43 @@
                     "samples": []
                 },
                 {
-                    "name": "gameIntent",
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GameIntent",
                     "slots": [
                         {
                             "name": "action",
-                            "type": "actiongame"
+                            "type": "ActionType"
                         }
                     ],
                     "samples": [
-                        "i am {action}",
-                        "i draw {action}",
-                        "i choose {action}",
-                        "{action}"
+                        "choose {action}",
+                        "i would like to choose {action}",
+                        "my choice is {action}",
+                        "{action}",
+                        "i choose {action}"
                     ]
-                },
-                {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
                 }
             ],
             "types": [
                 {
-                    "name": "actiongame",
+                    "name": "ActionType",
                     "values": [
                         {
                             "name": {
-                                "value": "rock",
-                                "synonyms": [
-                                    "stone"
-                                ]
+                                "value": "scissor"
                             }
                         },
                         {
                             "name": {
-                                "value": "paper",
-                                "synonyms": [
-                                    "papers"
-                                ]
+                                "value": "paper"
                             }
                         },
                         {
                             "name": {
-                                "value": "scissors",
-                                "synonyms": [
-                                    "scissor"
-                                ]
+                                "value": "rock"
                             }
                         }
                     ]
